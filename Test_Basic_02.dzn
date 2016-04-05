@@ -1,0 +1,22 @@
+nStations = 4; % number of station in a single line in direction order 1->10 and 10->1
+turnbackLocs = [1, 2, 4 ]; % stations that allow to start/stop trains
+%possibleRoutes = [| 1,2 | 1,4 | 2,4 |]; % FIXME: this should be calculated automatically from MiniZinc
+
+odmatrix = [|
+0, 200, 0, 0 |
+0, 0, 100, 200 |
+0, 0, 0, 200 |
+0, 0 , 0 , 0
+|]; % origin - destination matrix which can be used to identify the flow
+
+% link between 2 adjacent stations that include [linkNo, origin, destination, distance] where distance is in meter.
+links = [| 1, 2, 1000 | 2, 3, 1000 | 3, 4, 1000 |]; 
+linkCapacity = [4, 10, 10 ]; % Capacity of each link on 1 direction. Presume that capacity is the same for other direction
+linkFlow = [200, 300, 400]; % number of passenger travelling on each link - This can be calculated from OD matrix with predefine travelling routes
+
+trainCapacity = [100]; % number of passengers a train can carry. More array item if more trains are used
+trainCost = [1]; % cost of train for each meter running
+
+% There are 2 objective, transfer and operation, which need to be combined into single objective function. We define weight on each individual objective as coefficient parameteres
+transferWeight = 1; 
+operationWeight = 1; 
