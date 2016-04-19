@@ -1,0 +1,42 @@
+operationTime = 120;
+timedStation = 5;
+nStations = 6; % number of station in a single line in direction order 1->10 and 10->1
+
+% link between 2 adjacent stations that include [linkNo, origin, destination, time] where distance is in meter.
+links = [| 1, 3, 8 | 2, 3, 8 | 3, 4, 10 | 4, 5, 10 | 5, 6, 10      % Inbound link
+         | 6, 5, 8 | 5, 4, 8 | 4, 3, 10 | 3, 1, 10 | 2, 1, 10 |]; % Outbound link
+% Minutes headway of each link on 1 direction. Presume that capacity is the same for other direction
+linkHeadway = [ 15, 10, 10, 6, 4,      % Inbound direction 1 --> nStations
+                15, 10, 10, 6, 4, ];   % Oubound direction 1 <-- nStations
+minTurnback = 10; % min turnback time is 10
+maxRouteLength = 4;
+routes = [| 
+  1, 0, 0, 0 
+| 1, 3, 0, 0 
+| 1, 3, 4, 0 
+| 1, 3, 4, 5 
+| 2, 0, 0, 0
+| 2, 3, 0, 0 
+| 2, 3, 4, 0
+| 2, 3, 4, 5
+| 3, 0, 0, 0
+| 3, 4, 0, 0
+| 3, 4, 5, 0
+| 4, 0, 0, 0
+| 4, 5, 0, 0
+| 6, 0, 0, 0
+| 6, 7, 0, 0
+| 6, 7, 8, 0
+| 6, 7, 8, 9
+| 6, 7, 8, 10
+| 7, 0, 0, 0
+| 7, 8, 0, 0
+| 7, 8, 9, 0
+| 7, 8, 10, 0
+| 8, 0, 0, 0
+| 8, 9, 0, 0
+| 8, 10, 0, 0
+| 9, 0, 0, 0
+| 10, 0, 0, 0
+|];
+frequencies = [ 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 ];

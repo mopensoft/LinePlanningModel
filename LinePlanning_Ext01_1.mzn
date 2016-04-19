@@ -31,7 +31,7 @@ array[START_END_LOCS] of int: start_end = stablingLocs ++ turnbackLocs; % array 
 % Number of possible routes (origin, destination) based on turnback and stabling locations. 
 % FIXME: this only work with single line with no branch, specific combination required with branched network 
 set of int: ROUTES = 1..card(START_END_LOCS) * (card(START_END_LOCS) - 1); % set of routes including both direction
-% array of routes in both direction
+% array of routes in both direction. NOTE: this is fun with single line but should be predefined from input data in more complicated network
 array[ROUTES, 1..2] of int: possibleRoutes = array2d(ROUTES, 1..2, 
   [
     if j mod 4 == 1 then
@@ -125,8 +125,8 @@ function int: Distance(int: route) =
   sum(s in possibleRoutes[route,1]..possibleRoutes[route,2]-1) (odDistance[s, s + 1]); % FIXME: this should be more sophiticated based on links instead of station order OR each possible routes include all the stations from start to end of the line. 
 
 %%%%%%%%%%%%% SOLVE PROBLEM %%%%%%%%%%%%%%%%%%%%%
-%solve satisfy;
-solve minimize transferWeight * (totalPAX - directPAX) + operationWeight * trainDistance;
+solve satisfy;
+%solve minimize transferWeight * (totalPAX - directPAX) + operationWeight * trainDistance;
 
 %%%%%%%%%%%%% OUTPUT %%%%%%%%%%%%%%%%%%%%%%%%%%%
 output 
